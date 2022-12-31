@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head ('Cars · Список марок автомобилей')"></head>
+<body>
+  <header th:replace="fragments/header :: header"></header>
+
+  <section class="container mt-5 pb-5">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        Выберите марку
+        <a sec:authorize="hasRole('ADMIN')" href="/cars/add" class="btn btn-sm btn-outline-warning">Добавить</a>
+      </div>
+      <div class="list-group list-group-flush">
+        <a class="list-group-item list-group-item-action" th:each="make : ${makes}" th:href="|/cars/${make.name}|" th:text="${make.name}"></a>
+      </div>
+    </div>
+  </section>
+
+  <th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

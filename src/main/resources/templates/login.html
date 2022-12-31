@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Cars · Авторизация')"></head>
+<body class="form-signin-body text-center">
+    <form class="form-signin" th:action="@{/login}" method="post">
+        <img class="mb-4" src="icons/logo-car.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Неправильная пара логин/пароль
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success" role="alert">
+            Вы успешно вышли из профиля
+        </div>
+        <input type="username" name="username" class="form-control" placeholder="Логин" required autofocus>
+        <input type="password" name="password" class="form-control" placeholder="Пароль" required>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Войти" style="width: 300px;"/>
+        <p class="mt-5 mb-3 text-muted">Cardealer v1.0<br>K.Smirnova</p>
+    </form>
+</body>
+</html>

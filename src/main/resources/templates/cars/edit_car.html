@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Cars · Редактирование авто')"></head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<section class="container mt-5 pb-5">
+  <form th:action="@{/cars/edit/{id}(id=${car.id})}" th:object="${carForm}" method="post">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        Редактирование автомобиля
+        <div>
+          <input type="submit" class="btn btn-sm btn-outline-warning" value="Сохранить"/>
+<!--          <a th:href="@{/services/delete/{id}(id=${service.id})}" class="btn btn-sm btn-outline-danger">Удалить</a>-->
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3 ">Марка</div>
+          <div class="col-sm-9" th:text="${car.make.name}"></div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-sm-3 ">Модель</div>
+          <div class="col-sm-9" th:text="|${car.model.name} ${car.dealer.id}"></div>
+        </div>
+        <div class="mt-2">
+          <label for="dealerName" class="form-label">Автосалон</label>
+          <select class="form-select form-select-sm" id="dealerName" name="dealerId">
+            <option th:each="dealer : ${dealers}" th:value="${dealer.id}" th:text="${dealer.name}"
+                    th:selected="${dealer.isSelected(car.dealer.id)}"></option>
+          </select>
+        </div>
+        <div class="mt-2">
+          <label for="carVin" class="form-label">VIN</label>
+          <input type="text"  name="vin" th:value="${car.vin}" required class="form-control" id="carVin">
+        </div>
+        <div class="mt-2">
+          <label for="carYear" class="form-label">Год</label>
+          <input type="number"  name="year" th:value="${car.year}" required class="form-control" id="carYear">
+        </div>
+        <div class="mt-2">
+          <label for="carColor" class="form-label">Цвет</label>
+          <input type="text"  name="color" th:value="${car.color}" required class="form-control" id="carColor">
+        </div>
+        <div class="mt-2">
+          <label for="carPrice" class="form-label">Цена</label>
+          <input type="number"  name="price" th:value="${car.price}" required class="form-control" id="carPrice">
+        </div>
+        <div class="mt-2">
+          <label for="carStatus" class="form-label">Статус</label>
+          <select class="form-select form-select-sm" id="carStatus" name="statusId">
+            <option th:each="status : ${statuses}" th:value="${status.id}" th:text="${status.name}"
+                    th:selected="${status.isSelected(car.status.id)}" th:disabled="${status.id == 4}"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

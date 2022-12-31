@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Cars · Контакты')"></head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<section class="container mt-5 pb-5">
+  <div class="accordion" id="contacts">
+    <div th:each="contact : ${contacts}" class="accordion-item">
+      <h2 class="accordion-header" th:id="@{heading{id}(id=${contact.id})}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="@{#collapse{id}(id=${contact.id})}" th:aria-expanded="${contact.id == 1 ? 'true' : 'false'}" th:aria-controls="@{collapse{id}(id=${contact.id})}">
+          <span th:text="${contact.name}"></span>
+        </button>
+      </h2>
+      <div th:id="@{collapse{id}(id=${contact.id})}" class="accordion-collapse collapse" th:aria-labelledby="@{heading{id}(id=${contact.id})}" data-bs-parent="#contacts">
+        <div class="accordion-body">
+          <strong>ИНН:</strong> <span th:text="${contact.inn}"></span><br>
+          <strong>Адрес:</strong> <span th:text="${contact.address}"></span><br>
+          <strong>Телфон:</strong> <span th:text="${contact.phoneNumber}"></span><br>
+          <strong>Email:</strong> <span th:text="${contact.email}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head ('Cars · Автомобили')"></head>
+<body>
+    <header th:replace="fragments/header :: header"></header>
+
+    <section class="container mt-5 pb-5">
+        <div class="card">
+            <div class="card-header">Список автомобилей марки <span th:text="${make}"></span></div>
+            <div class="table-responsive">
+                <table class="table table-hover no-mb">
+                    <thead class="table-light">
+                        <th>*</th>
+                        <th class="text-center">Марка</th>
+                        <th class="text-center">Модель</th>
+                        <th class="text-center">Год</th>
+                        <th class="text-center">VIN</th>
+                        <th class="text-center">Цвет</th>
+                        <th class="text-center">Цена</th>
+                        <th class="text-center">Автосалон</th>
+                        <th class="text-center">Статус</th>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr th:if="${#lists.isEmpty(cars)}">
+                            <td colspan="9" class="text-center">Ничего не найдено</td>
+                        </tr>
+                        <tr th:each="car : ${cars}" style="vertical-align: middle">
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Действия
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a th:class="|dropdown-item ${car.status.id > 2 ? 'disabled' : ''}|" th:href="@{/sales/add/{id}(id=${car.id})}" >Продажа</a></li>
+                                        <li sec:authorize="hasRole('ADMIN')"><a th:class="|dropdown-item ${car.status.id == 4 ? 'disabled' : ''}|" th:href="@{/cars/edit/{id}(id=${car.id})}" >Редактировать</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td th:text="${car.make.name}"></td>
+                            <td th:text="${car.model.name}"></td>
+                            <td th:text="${car.year}"></td>
+                            <td th:text="${car.vin}"></td>
+                            <td th:text="${car.color}"></td>
+                            <td th:text="${car.price}"></td>
+                            <td th:text="${car.dealer.name}"></td>
+                            <td class="text-center"><span th:class="|badge ${car.status.styleClass}|" th:text="${car.status.name}"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

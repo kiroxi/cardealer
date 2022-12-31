@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head ('Cars · Добавление отрудника')"></head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<section class="container mt-5 pb-5">
+    <form th:action="@{/employees/add}" th:object="${emp}" method="post">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                Добавление сотрудника
+                <input type="submit" class="btn btn-sm btn-outline-warning" value="Добавить"/>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label for="clientLastName" class="form-label">Фамилия</label>
+                        <input type="text"  required class="form-control" id="clientLastName" th:field="*{lastName}">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="clientFirstName" class="form-label">Имя</label>
+                        <input type="text" required class="form-control" id="clientFirstName" th:field="*{firstName}">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="clientMiddleName" class="form-label">Отчество</label>
+                        <input type="text"  required class="form-control" id="clientMiddleName" th:field="*{middleName}">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="dealerName" class="form-label">Автосалон</label>
+                        <select class="form-select form-select-sm" id="dealerName" th:field="*{dealerId}" required>
+                            <option th:each="dealer : ${dealers}" th:value="${dealer.id}" th:text="${dealer.name}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="roleName" class="form-label">Автосалон</label>
+                        <select class="form-select form-select-sm" id="roleName" th:field="*{roleId}" required>
+                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="clientPhone" class="form-label">Номер телефона</label>
+                        <input type="text"  required class="form-control" id="clientPhone" th:field="*{phoneNumber}">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="clientEmail" class="form-label">Email</label>
+                        <input type="text"  required class="form-control" id="clientEmail" th:field="*{email}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Cars · Добавление продажи')"></head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<section class="container mt-5 pb-5">
+  <form th:action="@{/sales/add/{id}(id=${car.id})}" th:object="${sale}" method="post">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      Добавление продажи
+      <input type="submit" class="btn btn-sm btn-outline-warning" value="Добавить"/>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-3 ">Автосалон</div>
+        <div class="col-sm-9" th:text="${dealer.name}"></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3 ">Автомобиль</div>
+        <div class="col-sm-9" th:text="|${car.make.name} ${car.model.name}, ${car.color}, ${car.year}, ${car.vin}|"></div>
+      </div>
+
+
+        <input type="hidden" id="carId" th:field="*{carId}">
+        <input type="hidden" id="delaerId" th:field="*{dealerId}">
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-12">
+            <label for="saleManager" class="form-label">Менеджер</label>
+            <select class="form-select form-select-sm" id="saleManager" th:field="*{managerId}" required>
+              <option value="" selected>Не выбрано</option>
+              <option th:each="employee : ${employees}" th:value="${employee.id}" th:text="|[${employee.dealer.name}] ${employee.fullName}|"></option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <label for="saleClient" class="form-label">Клиент</label>
+            <select class="form-select form-select-sm" id="saleClient" th:field="*{clientId}" required>
+              <option value="" selected>Не выбрано</option>
+              <option th:each="client : ${clients}" th:value="${client.id}" th:text="|[${client.passport}] ${client.fullName}|"></option>
+            </select>
+          </div>
+        </div>
+
+<!--        <div class="mb-3">-->
+<!--          <label for="serviceName" class="form-label">Название услуги</label>-->
+<!--          <input type="text" th:field="*{name}" required class="form-control" id="serviceName">-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--          <label for="servicePrice" class="form-label">Стоимость услуги</label>-->
+<!--          <input type="number"  th:field="*{price}" required class="form-control" id="servicePrice">-->
+<!--        </div>-->
+
+    </div>
+  </div>
+  </form>
+</section>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

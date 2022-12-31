@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Cars · Клиенты')"></head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<section class="container mt-5 pb-5">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            Список клиентов
+            <a href="/clients/add" class="btn btn-sm btn-outline-warning">Добавить</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover no-mb">
+                <thead class="table-light">
+                <th class="text-center">ФИО</th>
+                <th class="text-center">Д.р.</th>
+                <th class="text-center">Телефон</th>
+                <th class="text-center">Email</th>
+                </thead>
+                <tbody>
+                <tr th:each="client : ${clients}">
+                    <td><a th:href="@{/clients/view/{id}(id=${client.id})}" th:text="${client.fullName}"></a></td>
+                    <td class="text-center" th:text="${#dates.format(client.birthDate, 'dd.MM.yyyy')}"></td>
+                    <td class="text-center" th:text="${client.phoneNumber}"></td>
+                    <td th:text="${client.email}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

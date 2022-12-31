@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head ('Cars · Услуги и цены')"></head>
+<body>
+    <header th:replace="fragments/header :: header"></header>
+
+    <section class="container mt-5 pb-5">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                Список услуг
+                <a sec:authorize="hasRole('ADMIN')" href="/services/add" class="btn btn-sm btn-outline-warning">Добавить</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover no-mb">
+                    <thead class="table-light">
+                        <th>Наименование услуги</th>
+                        <th class="text-center">Стоимость</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="service : ${services}">
+                        <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/services/edit/{id}(id=${service.id})}" th:text="${service.name}"></a></td>
+                        <td sec:authorize="hasRole('MANAGER')" th:text="${service.name}"></td>
+                        <td th:text="${service.price}" class="text-center"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

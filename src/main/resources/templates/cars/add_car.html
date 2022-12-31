@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Cars · Добавление автомобиля')"></head>
+<body>
+  <header th:replace="fragments/header :: header"></header>
+
+  <section class="container mt-5 pb-5">
+    <form th:action="@{/cars/add}" th:object="${car}" method="post">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          Добавление автомобиля
+          <input type="submit" class="btn btn-sm btn-outline-warning" value="Добавить"/>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label for="dealerName" class="form-label">Автосалон</label>
+              <select class="form-select form-select-sm" id="dealerName" th:field="*{dealerId}" required>
+                <option value="" selected>Не выбрано</option>
+                <option th:each="dealer : ${dealers}" th:value="${dealer.id}" th:text="${dealer.name}"></option>
+              </select>
+            </div>
+            <div class="col-md-12">
+              <label for="makeName" class="form-label">Марка</label>
+              <select class="form-select form-select-sm" id="makeName" th:field="*{makeId}" onchange="getModels(this.value)">
+                <option value="-1" selected>Не выбрано</option>
+                <option th:each="make : ${makes}" th:value="${make.id}" th:text="${make.name}"></option>
+              </select>
+            </div>
+            <div id="carInfo" style="display: none">
+              <div class="col-md-12">
+                <label for="modelName" class="form-label">Модель</label>
+                <select class="form-select form-select-sm" id="modelName" th:field="*{modelId}"></select>
+              </div>
+              <div class="col-md-12">
+                <label for="carVin" class="form-label">VIN</label>
+                <input type="text"  required class="form-control" id="carVin" th:field="*{vin}">
+              </div>
+              <div class="col-md-12">
+                <label for="carYear" class="form-label">Год</label>
+                <input type="number" min="1900" max="2025" required class="form-control" id="carYear" th:field="*{year}">
+              </div>
+              <div class="col-md-12">
+                <label for="carColor" class="form-label">Цвет</label>
+                <input type="text"  required class="form-control" id="carColor" th:field="*{color}">
+              </div>
+              <div class="col-md-12">
+                <label for="carPrice" class="form-label">Цена</label>
+                <input type="number"  required class="form-control" id="carPrice" th:field="*{price}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>
